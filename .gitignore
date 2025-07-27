@@ -1,0 +1,10 @@
+# Environment variables
+.env
+.env.test
+.env.local
+.env.production
+.env.development
+
+# Dependencies
+node_modules/
+__pycache__/
