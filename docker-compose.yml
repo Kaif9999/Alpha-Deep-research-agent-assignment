@@ -37,7 +37,6 @@ services:
     environment:
       - DATABASE_URL=postgresql://neondb_owner:npg_rqoS04ftwbdC@ep-hidden-frost-adv1608i-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
       - SERPAPI_KEY=c055a1a3babcd12cae9ea939d17bf1765ae5b50b1379daf3f433cc642318a8be
-      - OPENAI_API_KEY=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
       - REDIS_URL=redis://redis:6379/0
       - NODE_ENV=development
     depends_on:
