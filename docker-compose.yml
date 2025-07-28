@@ -1,82 +1,73 @@
-version: "3.8"
+version: '3.8'
 
 services:
   redis:
     image: redis:7-alpine
-    container_name: alpha_redis
     ports:
       - "6379:6379"
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
+    networks:
+      - app-network
 
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: alpha_backend
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: redis://redis:6379/0
-      SERPAPI_KEY: ${SERPAPI_KEY}
     ports:
       - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://neondb_owner:npg_rqoS04ftwbdC@ep-hidden-frost-adv1608i-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - SERPAPI_KEY=c055a1a3babcd12cae9ea939d17bf1765ae5b50b1379daf3f433cc642318a8be
+      - REDIS_URL=redis://redis:6379/0
+      - NODE_ENV=development
     depends_on:
-      redis:
-        condition: service_healthy
+      - redis
     volumes:
       - ./backend:/app
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health', timeout=5)"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+    networks:
+      - app-network
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   worker:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: alpha_worker
-    command: python -m app.worker
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: redis://redis:6379/0
-      SERPAPI_KEY: ${SERPAPI_KEY}
-      PYTHONPATH: /app
+      - DATABASE_URL=postgresql://neondb_owner:npg_rqoS04ftwbdC@ep-hidden-frost-adv1608i-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - SERPAPI_KEY=c055a1a3babcd12cae9ea939d17bf1765ae5b50b1379daf3f433cc642318a8be
+      - OPENAI_API_KEY=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
+      - REDIS_URL=redis://redis:6379/0
+      - NODE_ENV=development
     depends_on:
-      redis:
-        condition: service_healthy
-      backend:
-        condition: service_healthy
+      - redis
+      - backend
     volumes:
       - ./backend:/app
-    restart: unless-stopped
+    networks:
+      - app-network
+    command: python -m app.worker
 
   frontend:
-    build: 
+    build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: alpha_frontend
     ports:
       - "3000:3000"
-    depends_on:
-      backend:
-        condition: service_healthy
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
-    restart: unless-stopped
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - app-network
 
 volumes:
   redis_data:
-    driver: local
 
 networks:
-  default:
+  app-network:
     driver: bridge

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Text, DateTime, JSON, ForeignKey
+from sqlalchemy import Column, Integer, Text, DateTime, JSON, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -9,15 +9,15 @@ class Campaign(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False)
     status = Column(Text, nullable=False, default="draft")
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False) # type: ignore
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class Company(Base):
     __tablename__ = "companies"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False)
     domain = Column(Text)
-    campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False) # type: ignore
+    campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=False, unique=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class Person(Base):
     __tablename__ = "people"
@@ -26,7 +26,7 @@ class Person(Base):
     email = Column(Text, nullable=False)
     title = Column(Text)
     company_id = Column(Integer, ForeignKey("companies.id"), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False) # type: ignore
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class ContextSnippet(Base):
     __tablename__ = "context_snippets"
@@ -35,9 +35,9 @@ class ContextSnippet(Base):
     entity_id = Column(Integer, nullable=False)
     snippet_type = Column(Text, nullable=False)
     content = Column(Text, nullable=False)
-    payload = Column(JSON, nullable=False)  # This should store our research data
+    payload = Column(JSON, nullable=False)
     source_urls = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False) # type: ignore
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class SearchLog(Base):
     __tablename__ = "search_logs"
@@ -46,4 +46,4 @@ class SearchLog(Base):
     iteration = Column(Text, nullable=False)
     query = Column(Text, nullable=False)
     top_results = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False) # type: ignore
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

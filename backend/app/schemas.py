@@ -39,22 +39,33 @@ class ContextSnippetOut(BaseModel):
 class CampaignOut(BaseModel):
     id: int
     name: str
+    status: str
     created_at: datetime
     
     class Config:
         from_attributes = True
 
-# Request schemas
+class CampaignWithDetailsOut(BaseModel):
+    id: int
+    name: str
+    status: str
+    created_at: datetime
+    company: Optional[CompanyOut] = None
+    people: List[PersonOut] = []
+    
+    class Config:
+        from_attributes = True
+
 class PersonCreate(BaseModel):
     full_name: str
     email: EmailStr
     title: Optional[str] = None
-    company_id: int
 
 class CompanyCreate(BaseModel):
     name: str
     domain: Optional[str] = None
-    campaign_id: int
 
 class CampaignCreate(BaseModel):
     name: str
+    company: CompanyCreate
+    people: List[PersonCreate]
