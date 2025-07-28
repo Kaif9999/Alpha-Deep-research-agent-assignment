@@ -2,7 +2,7 @@
 
 An AI-powered company research and data enrichment platform that provides real-time business intelligence using live web data.
 
-## 🚀 Features
+##  Features
 
 - **Real-time Research**: Live web scraping using SerpAPI Google Search
 - **Company Intelligence**: Automated research on business models, competitors, pricing
@@ -10,7 +10,7 @@ An AI-powered company research and data enrichment platform that provides real-t
 - **Database Integration**: PostgreSQL with Redis for caching and job queues
 - **Modern Stack**: FastAPI backend + Next.js frontend
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ├── backend/                 # FastAPI Python backend
@@ -32,7 +32,7 @@ An AI-powered company research and data enrichment platform that provides real-t
 └── README.md
 ```
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Backend
 - **FastAPI** - Modern Python web framework
@@ -48,7 +48,7 @@ An AI-powered company research and data enrichment platform that provides real-t
 - **Tailwind CSS** - Styling
 - **WebSocket** - Real-time updates
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Docker and Docker Compose
@@ -56,8 +56,8 @@ An AI-powered company research and data enrichment platform that provides real-t
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/yourusername/alpha-deep-research-agent.git
-cd alpha-deep-research-agent
+git clone https://github.com/Kaif9999/Alpha-Deep-research-agent-assignment.git
+
 ```
 
 ### 2. Environment Setup
