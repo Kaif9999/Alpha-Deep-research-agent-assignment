@@ -84,7 +84,7 @@ This will start:
 - Check backend health: http://localhost:8000/health
 - API docs: http://localhost:8000/docs
 
-## 📊 Usage
+## Usage
 
 1. **Access the Application**: Navigate to http://localhost:3000
 2. **View Research Targets**: See pre-loaded executives (Sundar Pichai, Ruth Porat)
@@ -92,7 +92,7 @@ This will start:
 4. **Monitor Progress**: Watch real-time updates in the research console
 5. **View Results**: Results automatically load when research completes
 
-## 🗃️ Database Schema
+##  Database Schema
 
 The system uses a simple relational structure:
 - **Campaigns** → **Companies** → **People** → **Context Snippets**
@@ -102,7 +102,7 @@ On startup, sample data is automatically created:
 - 1 Company: "Google"
 - 2 People: "Sundar Pichai (CEO)", "Ruth Porat (CFO)"
 
-## 🔧 Development
+## Development
 
 ### Backend Development
 ```bash
@@ -126,7 +126,7 @@ The system automatically:
 - Seeds sample data
 - Handles migrations
 
-## 📡 API Endpoints
+## API Endpoints
 
 - `GET /` - API status
 - `GET /health` - System health check
@@ -136,7 +136,7 @@ The system automatically:
 - `GET /snippets/{company_id}` - Get research results
 - `WebSocket /ws` - Real-time updates
 
-## 🔍 Research Process
+## Research Process
 
 1. **Target Selection**: Choose a person/company to research
 2. **Query Generation**: Create targeted search queries
@@ -144,27 +144,3 @@ The system automatically:
 4. **Data Analysis**: Extract and structure business intelligence
 5. **Storage**: Save insights with source URLs
 6. **Real-time Updates**: WebSocket progress notifications
-
-## 🚨 Production Notes
-
-For production deployment:
-1. Replace demo API keys with your own
-2. Set up proper environment variables
-3. Configure secure database credentials
-4. Implement authentication/authorization
-5. Set up monitoring and logging
-
-## 📝 License
-
-This project is for educational/demo purposes.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
----
-
-**Built with ❤️ using FastAPI + Next.js**
